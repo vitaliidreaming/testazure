@@ -40,7 +40,7 @@ class BlobStorage:
             blob_client.upload_blob(stream)
         except az_exc.ResourceExistsError as e:
             print("DLOG: FAULT UPLOAD")
-            return e.args
+            return f"Upload failed"
         return name
 
     def download_file(self, name):
@@ -49,7 +49,7 @@ class BlobStorage:
             return blob_client.download_blob().readall()
         except Exception as e:  # dunno exception yet
             print("DLOG: FAULT DOWNLOAD")
-            return e.args
+            return f"Download failed. Can't find {name}"
 
     def list_all(self):
         bl = self.container_client.list_blobs()
